@@ -7,20 +7,27 @@
     <% for( let product of products) { %>
     <div class="cart-card">
       <div class="cart-img">
-        <img src="<%= product.imageUrl %>" alt="<%= product.title %>" />
+        <img
+          src="<%= product.productID.imageUrl %>"
+          alt="<%= product.productID.title %>"
+        />
       </div>
       <div class="cart-info">
         <div class="cart-head">
-          <h3 class="cart-title"><%= product.title %></h3>
+          <h3 class="cart-title"><%= product.productID.title %></h3>
           x
           <span><%= product.quantity %></span>
         </div>
         <div class="cart-desc-price">
-          <p class="cart-description"><%= product.description %></p>
-          <span class="cart-price"><%= product.price %>$</span>
+          <p class="cart-description"><%= product.productID.description %></p>
+          <span class="cart-price"><%= product.productID.price %>$</span>
         </div>
         <form action="/delete-cart-item" method="post" class="cart-delete-item">
-          <input type="hidden" name="productId" value="<%= product._id %>" />
+          <input
+            type="hidden"
+            name="productId"
+            value="<%= product.productID._id %>"
+          />
           <button class="danger" type="submit">Delete</button>
         </form>
       </div>

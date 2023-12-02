@@ -28,8 +28,8 @@ exports.getIndex = (req, res, next) => {
   });
 };
 exports.getCart = (req, res, next) => {
-  req.user.getCart().then((products) => {
-    console.log(products);
+  req.user.populate("cart.items.productID").then((user) => {
+    const products = user.cart.items;
     return res.render("shop/cart", {
       products,
       path: "/cart",

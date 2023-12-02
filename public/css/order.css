@@ -1,0 +1,13 @@
+#orderButton {
+  width: 50%;
+  margin: 22px;
+  text-align: center;
+}
+.order-id {
+  padding: 3px;
+  margin: 15px 0 0 15px;
+}
+.order-id span {
+  font-weight: 800;
+  border-bottom: 2px solid gainsboro;
+}

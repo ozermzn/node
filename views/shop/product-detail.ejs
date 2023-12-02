@@ -1,0 +1,28 @@
+<%- include('../includes/head.ejs') %>
+<main class="product-detail-main">
+  <div class="product-detail-image-container">
+    <img
+      class="product-detail-image"
+      src="<%= product.imageUrl %>"
+      alt="<%= product.title %>"
+    />
+  </div>
+  <div class="product-detail-info">
+    <h2 class="product-detail-header"><%= product.title %></h2>
+    <p class="product-detail-description"><%= product.description %></p>
+    <div class="product-detail-buttons-price">
+      <p class="price"><%= product.price %>$</p>
+      <div class="buttons">
+        <form class="product-detail-form" action="/add-to-cart" method="post">
+          <button class="primary">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </button>
+        </form>
+        <button class="secondary">
+          <i class="fa-regular fa-heart"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include('../includes/footer.ejs') %>

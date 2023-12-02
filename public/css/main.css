@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Sofia+Sans+Condensed:ital,wght@0,1;0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,1;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-family: "Sofia Sans Condensed", sans-serif;
+  letter-spacing: 1px;
+}
+body {
+  width: 100%;
+  height: 100%;
+}
+button {
+  padding: 5px;
+  font-family: "Sofia Sans Condensed", sans-serif;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.primary {
+  background-color: #004225;
+  color: white;
+}
+.secondary {
+  background-color: #94446f;
+  color: white;
+}
+.danger {
+  background-color: #952323;
+  color: white;
+}
+.danger:hover {
+  background-color: white;
+  border: 2px solid #952323;
+  color: #952323;
+}
+.primary-outline {
+  border: 2px solid #004225;
+  background-color: white;
+  color: #004225;
+}
+.primary-outline:hover {
+  background-color: #004225;
+  color: white;
+}
+.primary:hover {
+  background-color: #004225;
+  color: white;
+  opacity: 0.7;
+}
+.secondary:hover {
+  opacity: 0.7;
+}
+.center {
+  display: grid;
+  place-items: center;
+}
+.border-bottom {
+  width: 34px;
+  height: 5px;
+  margin: 5px;
+  background-color: #004225;
+}
+
+.card-image {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  image-resolution: 300dpi;
+}
+
+a {
+  text-decoration: none;
+  padding: 6px;
+  font-family: "Sofia Sans Condensed", sans-serif;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}

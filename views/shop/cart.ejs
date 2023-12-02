@@ -1,0 +1,34 @@
+<%- include('../includes/head.ejs') %>
+<main>
+  <head>
+    <h1 class="center">Cart</h1>
+  </head>
+  <div class="cart-grid">
+    <% for( let product of products) { %>
+    <div class="cart-card">
+      <div class="cart-img">
+        <img src="<%= product.imageUrl %>" alt="<%= product.title %>" />
+      </div>
+      <div class="cart-info">
+        <div class="cart-head">
+          <h3 class="cart-title"><%= product.title %></h3>
+          x
+          <span><%= product.quantity %></span>
+        </div>
+        <div class="cart-desc-price">
+          <p class="cart-description"><%= product.description %></p>
+          <span class="cart-price"><%= product.price %>$</span>
+        </div>
+        <form action="/delete-cart-item" method="post" class="cart-delete-item">
+          <input type="hidden" name="productId" value="<%= product._id %>" />
+          <button class="danger" type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+    <% } %>
+  </div>
+  <form action="/create-order" method="post">
+    <button id="orderButton" class="primary">Order Now!</button>
+  </form>
+</main>
+<%- include('../includes/footer.ejs') %>

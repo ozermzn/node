@@ -1,29 +1,33 @@
 <%- include('../includes/head.ejs') %>
 <main>
-  <div class="order-id">
-    <span> Order ID: </span><%= order._id %>
-    <p class="order-user-information"><%= order.user.name %></p>
-    <p class="order-user-information"><%= order.user.email %></p>
+  <% order.forEach(ordr => { %>
+  <div class="user-order-information">
+    <h3><%= ordr.user.map(usr => usr.username) %></h3>
+    <h5><%= ordr.user.map(usr => usr.userID) %></h5>
   </div>
-  <% order.items.map(item => { %>
-  <div class="cart-grid">
-    <div class="cart-card">
-      <div class="cart-img">
-        <img src="<%= item.imageUrl %>" alt="<%= item.title %>" />
+  <% ordr.products.forEach(product =>{ %>
+
+  <div class="container">
+    <div class="product-order-information">
+      <div class="">
+        <img
+          src="<%= product.product.imageUrl %>"
+          alt="<%= product.product.title %>"
+          class="order-image"
+        />
       </div>
-      <div class="cart-info">
-        <div class="cart-head">
-          <h3 class="cart-title"><%= item.title %></h3>
-          x
-          <span><%= item.quantity %></span>
-        </div>
-        <div class="cart-desc-price">
-          <p class="cart-description"><%= item.description %></p>
-          <span class="cart-price"><%= item.price %>$</span>
-        </div>
+
+      <div>
+        <h3 class="order-title">
+          <%= product.product.title %> x <%= product.quantity %>
+        </h3>
+        <h5 class="order-id"><%= product._id %></h5>
+        <p><%= product.product.description %></p>
+        <p><%= product.product.price * product.quantity%> ₺</p>
       </div>
     </div>
   </div>
-  <% }) %>
+
+  <% }) %> <% }) %>
 </main>
 <%- include('../includes/footer.ejs') %>

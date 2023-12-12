@@ -14,7 +14,7 @@
   padding: 50px;
 }
 .card {
-  width: 300px;
+  width: 200px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -60,13 +60,15 @@
   margin-top: 3px;
 }
 .card-price .price {
-  font-size: 22px;
+  font-size: 15px;
   font-weight: 600;
   color: #004225;
   letter-spacing: 2px;
 }
-.card-price button {
-  width: 120px;
+.card-price button,
+a {
+  width: 50px;
+  font-size: 12px !important;
 }
 
 @media screen and (max-width: 1350px) {

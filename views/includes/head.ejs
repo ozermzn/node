@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/css/product-detail.css" />
     <link rel="stylesheet" href="/css/cart.css" />
     <link rel="stylesheet" href="/css/order.css" />
+    <link rel="stylesheet" href="/css/login.css" />
     <title><%= pageTitle %></title>
   </head>
   <body>
@@ -27,17 +28,25 @@
           <li>
             <a href="/">Shop</a>
           </li>
-          <li>
-            <a href="/admin/add-product">Add Product</a>
-          </li>
+
           <li>
             <a href="/cart">Cart</a>
           </li>
           <li>
             <a href="/orders">Orders</a>
           </li>
+          <% if(!!isLoggedIn){ %>
+          <li>
+            <a href="/admin/add-product">Add Product</a>
+          </li>
           <li>
             <a href="/admin/product-list">Admin Products</a>
+          </li>
+          <% } %>
+        </ul>
+        <ul>
+          <li>
+            <a href="/login"><i class="fa-solid fa-user"></i></a>
           </li>
         </ul>
       </nav>

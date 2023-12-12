@@ -1,11 +1,14 @@
 const Products = require("../models/product");
 const User = require("../models/user");
+const Order = require("../models/order");
+const user = require("../models/user");
 exports.getProducts = (req, res, next) => {
   Products.find().then((products) => {
     res.render("shop/products", {
       products: products,
       path: "/shop",
       pageTitle: "Shop",
+      isLoggedIn: req.isLoggedIn,
     });
   });
 };
@@ -24,6 +27,7 @@ exports.getIndex = (req, res, next) => {
       products: products,
       path: "/",
       pageTitle: "Home",
+      isLoggedIn: req.isLoggedIn,
     });
   });
 };
@@ -34,6 +38,7 @@ exports.getCart = (req, res, next) => {
       products,
       path: "/cart",
       pageTitle: "Cart",
+      isLoggedIn: req.isLoggedIn,
     });
   });
 };
@@ -66,22 +71,40 @@ exports.deleteCartItem = (req, res, next) => {
 
 exports.postOrder = (req, res, next) => {
   req.user
-    .addOrder()
+    .populate("cart.items.productID")
+    .then((user) => {
+      const products = user.cart.items.map((product) => {
+        return {
+          quantity: product.quantity,
+          product: { ...product.productID._doc },
+        };
+      });
+      const order = new Order({
+        user: {
+          username: req.user.name,
+          userID: req.user._id,
+        },
+        products: products,
+      });
+
+      order.save();
+    })
     .then((result) => {
+      return req.user.clearCart();
+    })
+    .then(() => {
       res.redirect("/orders");
     })
     .catch((err) => console.log(err));
 };
 
 exports.getOrder = (req, res, next) => {
-  req.user.getOrders().then((orders) => {
-    for (let order of orders) {
-      console.log(order);
-      return res.render("shop/orders", {
-        order,
-        path: "/orders",
-        pageTitle: "Orders",
-      });
-    }
+  Order.find({ "user.userID": req.user._id }).then((orders) => {
+    res.render("shop/orders", {
+      path: "/shop/orders",
+      pageTitle: "Orders",
+      order: orders.reverse(),
+      isLoggedIn: req.isLoggedIn,
+    });
   });
 };

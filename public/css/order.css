@@ -1,13 +1,28 @@
-#orderButton {
-  width: 50%;
-  margin: 22px;
-  text-align: center;
+.container {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 20px;
+  margin: 20px;
+  background-color: black;
+  color: wheat;
+}
+.user-order-information {
+  padding: 10px 10px 0 10px;
+  margin: 0 0 0 12px;
+}
+.product-order-information {
+  padding: 20px;
+  display: flex;
+  gap: 12px;
+}
+.product-order-information .order-image {
+  width: 100px;
+  height: 100px;
+  object-fit: center;
+  border-radius: 12px;
+  aspect-ratio: 3/2;
+}
+
+.order-title {
 }
 .order-id {
-  padding: 3px;
-  margin: 15px 0 0 15px;
-}
-.order-id span {
-  font-weight: 800;
-  border-bottom: 2px solid gainsboro;
 }

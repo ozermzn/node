@@ -4,7 +4,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   background-color: #004225;
   padding: 20px;
   color: #eee;
@@ -32,7 +31,7 @@
 .navigation ul li a {
   text-decoration: none;
   color: #eee;
-  font-size: 16px;
+  font-size: 15px !important;
 
   transition: all 0.2s ease;
 }

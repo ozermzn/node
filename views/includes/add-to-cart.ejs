@@ -1,8 +1,14 @@
 <form action="/cart" method="post">
   <input type="hidden" name="productId" value="<%= product._id %>" />
+  <% if(isLoggedIn){ %>
   <button type="submit" class="primary">
     <i class="fa-solid fa-cart-shopping"></i>
   </button>
+  <% }else{ %>
+
+  <a href="/login" class="primary">
+    <i class="fa-solid fa-cart-shopping"></i>
+  </a>
+
+  <% } %>
 </form>
-
-

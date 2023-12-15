@@ -1,4 +1,4 @@
-<%- include('../includes/head.ejs') %>
+<%- include('../includes/head.ejs',{isLoggedIn:isLoggedIn}) %>
 <main>
   <h1 class="center main-header">From Shop To You Products</h1>
   <% if (products.length > 0) { %>
@@ -21,7 +21,9 @@
         <span class="price"><%= product.price %>$</span>
         <a href="/products/<%= product.id %>" class="secondary">Details</a>
 
-        <%- include('../includes/add-to-cart.ejs',{product:product}) %>
+        <%-
+        include('../includes/add-to-cart.ejs',{product:product},{isLoggedIn:isLoggedIn})
+        %>
       </div>
     </div>
 

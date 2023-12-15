@@ -2,9 +2,8 @@ const User = require("../models/user");
 
 exports.getLogin = (req, res, next) => {
   // const isLoggedIn = req.get("Cookie").split(";")[2].trim().split("=")[1];
-  const isLoggedIn = true;
-  console.log(req.session.isLoggedIn);
-  res.render("shop/login", {
+
+  res.render("auth/login", {
     path: "/login",
     pageTitle: "Login",
     isLoggedIn: req.session.isLoggedIn,
@@ -25,4 +24,33 @@ exports.postLogout = (req, res, next) => {
     console.log(err);
     res.redirect("/");
   });
+};
+
+exports.getRegister = (req, res, next) => {
+  res.render("auth/register", {
+    path: "/register",
+    pageTitle: "Register",
+    isLoggedIn: req.session.isLoggedIn,
+  });
+};
+
+exports.postRegister = (req, res, next) => {
+  const email = req.body.email;
+  const name = req.body.name;
+  const password = req.body.password;
+
+  const confirmPassword = req.body.confirmPassword;
+  User.findOne({ email: email })
+    .then((userDoc) => {
+      if (userDoc) return res.redirect("/");
+
+      const user = new User({ email, name, password, cart: { items: [] } });
+      return user.save();
+    })
+    .then((result) => {
+      console.log(result);
+      res.redirect("/login");
+    })
+
+    .catch((err) => console.log(err));
 };

@@ -88,3 +88,13 @@ a {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
+#auth-a {
+  width: 100%;
+  font-size: 1.1rem !important;
+  text-align: center;
+  color: white;
+  font-family: "Pixelify Sans", cursive;
+}
+#auth-a:hover {
+  color: #ffb000;
+}

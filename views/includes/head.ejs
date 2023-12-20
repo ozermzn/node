@@ -49,12 +49,13 @@
           <form action="/logout" method="post">
             <li>
               <button id="logoutButton">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <i class="fa-solid fa-right-from-bracket"></i>
               </button>
             </li>
           </form>
-        </ul>
-        <% }else{ %>
+        </ul> 
+        <% }else{ %> 
         </ul>
 
         <ul>

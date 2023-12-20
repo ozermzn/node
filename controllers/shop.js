@@ -30,6 +30,7 @@ exports.getIndex = (req, res, next) => {
       path: "/",
       pageTitle: "Home",
       isLoggedIn: req.session.isLoggedIn,
+      csrfToken: req.csrfToken(),
     });
   });
 };

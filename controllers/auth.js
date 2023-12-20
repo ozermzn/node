@@ -7,6 +7,7 @@ exports.getLogin = (req, res, next) => {
     path: "/login",
     pageTitle: "Login",
     isLoggedIn: req.session.isLoggedIn,
+    csrfToken: req.csrfToken(),
   });
 };
 exports.postLogin = (req, res, next) => {
@@ -42,6 +43,7 @@ exports.getRegister = (req, res, next) => {
     path: "/register",
     pageTitle: "Register",
     isLoggedIn: req.session.isLoggedIn,
+    csrfToken: req.csrfToken(),
   });
 };
 

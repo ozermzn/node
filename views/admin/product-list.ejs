@@ -30,6 +30,8 @@
           method="post"
         >
           <input type="hidden" name="productId" value="<%= product._id %>" />
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
           <button type="submit" class="danger">Delete</button>
         </form>
       </div>

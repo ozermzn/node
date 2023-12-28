@@ -2,6 +2,7 @@
   <input type="hidden" name="productId" value="<%= product._id %>" />
   <% if(isLoggedIn){ %>
   <button type="submit" class="primary">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
     <i class="fa-solid fa-cart-shopping"></i>
   </button>
   <% }else{ %>

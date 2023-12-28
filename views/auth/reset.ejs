@@ -1,16 +1,13 @@
 <%- include('../includes/head.ejs') %>
 <main class="login-main">
   <div class="login-container">
-    <h2>Login</h2>
-    <form class="login-form" action="/login" method="post">
+    <h2>Reset Password</h2>
+    <form class="login-form" action="/reset" method="post">
       <div>
         <label for="email">Email</label>
         <input type="email" name="email" id="email" />
       </div>
-      <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" />
-      </div>
+
       <% if (errorMessage) { %>
       <div>
         <p class="error-message"><%= errorMessage %></p>
@@ -18,9 +15,8 @@
       <%} %>
 
       <div>
-        <button class="primary" type="submit">Login</button>
-        <a href="/register" id="auth-a">Don't you have a account?</a>
-        <a href="/reset" id="auth-r">Forgot your password?</a>
+        <button class="danger" type="submit">Reset</button>
+
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
       </div>
     </form>

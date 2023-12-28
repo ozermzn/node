@@ -1,13 +1,24 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
+const sendgridTransport = require("nodemailer-sendgrid-transport");
+const crypto = require("crypto");
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key:
+        "SG.ksJqkK6rTSyg12Qbd7DSYQ.pt9t0kyOs4STS-A23Htd4effH2Cw5Sd4KH0OH-se9Kg",
+    },
+  })
+);
+
 exports.getLogin = (req, res, next) => {
   // const isLoggedIn = req.get("Cookie").split(";")[2].trim().split("=")[1];
-
+  let message = req.flash("error");
   res.render("auth/login", {
     path: "/login",
     pageTitle: "Login",
-    isLoggedIn: req.session.isLoggedIn,
-    csrfToken: req.csrfToken(),
+    errorMessage: message.length > 0 ? (message = message[0]) : null,
   });
 };
 exports.postLogin = (req, res, next) => {
@@ -15,6 +26,7 @@ exports.postLogin = (req, res, next) => {
   const password = req.body.password;
   User.findOne({ email }).then((user) => {
     if (!user) {
+      req.flash("error", "Invalid email.");
       return res.redirect("/login");
     }
 
@@ -26,8 +38,10 @@ exports.postLogin = (req, res, next) => {
           if (err) console.log(err);
           res.redirect("/");
         });
+      } else {
+        req.flash("error", "Invalid password.");
+        res.redirect("/login");
       }
-      res.redirect("/login");
     });
   });
 };
@@ -39,11 +53,11 @@ exports.postLogout = (req, res, next) => {
 };
 
 exports.getRegister = (req, res, next) => {
+  let message = req.flash("error");
   res.render("auth/register", {
     path: "/register",
     pageTitle: "Register",
-    isLoggedIn: req.session.isLoggedIn,
-    csrfToken: req.csrfToken(),
+    errorMessage: message.length > 0 ? message : null,
   });
 };
 
@@ -54,21 +68,76 @@ exports.postRegister = (req, res, next) => {
   const confirmPassword = req.body.confirmPassword;
   User.findOne({ email: email })
     .then((userDoc) => {
-      if (userDoc) return res.redirect("/");
-      return bcrypt.hash(password, 12).then((hashedPassword) => {
-        const user = new User({
-          email,
-          name,
-          password: hashedPassword,
-          cart: { items: [] },
-        });
-        return user.save();
-      });
-    })
-    .then((result) => {
-      console.log(result);
-      res.redirect("/login");
-    })
+      if (userDoc) {
+        req.flash("error", "Email exist already!");
+        return res.redirect("/register");
+      }
 
+      return bcrypt
+        .hash(password, 12)
+        .then((hashedPassword) => {
+          const user = new User({
+            email,
+            name,
+            password: hashedPassword,
+            cart: { items: [] },
+          });
+          return user.save();
+        })
+        .then((result) => {
+          res.redirect("/login");
+          return transporter.sendMail({
+            to: email,
+            from: "ozer.ramazan@outlook.com.tr",
+            subject: "Kayıt Başarılı!",
+            html: "<h1>Bravo</h1>",
+          });
+        })
+        .catch((err) => console.log(err));
+    })
     .catch((err) => console.log(err));
+};
+
+exports.getResetPassword = (req, res, next) => {
+  let message = req.flash("error");
+  res.render("auth/reset", {
+    pageTitle: "Reset Password",
+    path: "/reset",
+    errorMessage: message.length > 0 ? message : null,
+  });
+};
+
+exports.postResetPassword = (req, res, next) => {
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) {
+      console.log(err);
+      return res.redirect("/reset");
+    }
+    const token = buffer.toString("hex");
+    User.findOne({ email: req.body.email })
+      .then((user) => {
+        if (!user) {
+          req.flash("error", "No account with that email found.");
+          return res.redirect("/reset");
+        }
+        user.token = token;
+        user.tokenExpriation = Date.now() + 3600000;
+        return user.save();
+      })
+      .then((result) => {
+        res.redirect("/");
+        transporter.sendMail({
+          to: req.body.email,
+          from: "ozer.ramazan@outlook.com.tr",
+          subject: "Reset your password",
+          html: `
+          <p>You requested password reset.</p>
+          <p> Click this <a href="http://localhost:3000/reset/${token}">link</a> to set a new password. </p>
+          `,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 };

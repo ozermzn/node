@@ -20,8 +20,14 @@
         <input type="password" name="confirmPassword" id="confirmPassword" />
       </div>
       <div>
+        <% if (errorMessage) { %>
+        <div>
+          <p class="error-message"><%= errorMessage %></p>
+        </div>
+        <%} %>
         <button class="primary" type="submit">Register</button>
         <a id="auth-a" href="/login" class="">Do you have a account?</a>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
       </div>
     </form>
   </div>

@@ -30,6 +30,7 @@
             value="<%= product.productID._id %>"
           />
           <button class="danger" type="submit">Delete</button>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
         </form>
       </div>
     </div>
@@ -37,6 +38,7 @@
   </div>
   <form action="/create-order" method="post">
     <button id="orderButton" class="primary">Order Now!</button>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
   </form>
 </main>
 <%- include('../includes/footer.ejs') %>

@@ -39,9 +39,7 @@ a.primary {
   color: white;
 }
 .danger:hover {
-  background-color: white;
-  border: 2px solid #952323;
-  color: #952323;
+  opacity: 0.8;
 }
 .primary-outline {
   border: 2px solid #004225;
@@ -97,4 +95,22 @@ a {
 }
 #auth-a:hover {
   color: #ffb000;
+}
+#auth-r {
+  font-size: 1rem;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 0.7px;
+  font-family: "Pixelify Sans", cursive;
+  color: white;
+}
+#auth-r:hover {
+  color: #ffb000;
+}
+
+.error-message {
+  color: #eee;
+  background-color: rgba(239, 64, 64, 0.7);
+  padding: 6px;
+  border-radius: 6px;
 }

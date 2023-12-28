@@ -9,7 +9,6 @@ exports.getProducts = (req, res, next) => {
       products: products,
       path: "/shop",
       pageTitle: "Shop",
-      isLoggedIn: req.session.isLoggedIn,
     });
   });
 };
@@ -19,7 +18,6 @@ exports.getProduct = (req, res, next) => {
     res.render("shop/product-detail", {
       product,
       pageTitle: product?.title,
-      isLoggedIn: req.session.isLoggedIn,
     });
   });
 };
@@ -29,8 +27,6 @@ exports.getIndex = (req, res, next) => {
       products: products,
       path: "/",
       pageTitle: "Home",
-      isLoggedIn: req.session.isLoggedIn,
-      csrfToken: req.csrfToken(),
     });
   });
 };
@@ -41,7 +37,6 @@ exports.getCart = (req, res, next) => {
       products,
       path: "/cart",
       pageTitle: "Cart",
-      isLoggedIn: req.session.isLoggedIn,
     });
   });
 };
@@ -107,7 +102,6 @@ exports.getOrder = (req, res, next) => {
       path: "/shop/orders",
       pageTitle: "Orders",
       order: orders.reverse(),
-      isLoggedIn: req.session.isLoggedIn,
     });
   });
 };

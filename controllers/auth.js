@@ -141,3 +141,21 @@ exports.postResetPassword = (req, res, next) => {
       });
   });
 };
+
+exports.getNewPassword = (req, res, next) => {
+  const token = req.params.token;
+  User.findOne({ token: token })
+    .then((user) => {
+      console.log(user);
+      let message = req.flash("error");
+      res.render("auth/new-password", {
+        pageTitle: "Reset Password",
+        path: "/new-password",
+        userID: user._id.toString(),
+        errorMessage: message.length > 0 ? message : null,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

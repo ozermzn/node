@@ -54,6 +54,9 @@ exports.postEditProduct = (req, res, next) => {
   const newPrice = req.body.price;
   Product.findById(productID)
     .then((product) => {
+      if (product.userID.toString() !== req.user._id.toString()) {
+        return;
+      }
       product.title = newTitle;
       product.price = newPrice;
       product.description = newDescription;
@@ -69,7 +72,8 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const productID = req.body.productId;
-  Product.findByIdAndDelete(productID)
+
+  Product.deleteOne({ _id: productID, userID: req.session.user._id })
     .then((result) => {
       console.log("Item was deleted!");
       console.log(result);
@@ -80,6 +84,7 @@ exports.postDeleteProduct = (req, res, next) => {
 
 exports.getAdminProducts = (req, res, next) => {
   const userId = req.user._id;
+
   Product.find({ userID: userId }).then((products) => {
     res.render("admin/product-list", {
       products: products,

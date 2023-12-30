@@ -2,6 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
+const { validationResult } = require("express-validator");
 const crypto = require("crypto");
 const transporter = nodemailer.createTransport(
   sendgridTransport({
@@ -66,6 +67,16 @@ exports.postRegister = (req, res, next) => {
   const name = req.body.name;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(422).render("auth/register", {
+      path: "/regiser",
+      pageTitle: "Register",
+      errorMessage: errors.array().map((i) => i.msg),
+    });
+  }
   User.findOne({ email: email })
     .then((userDoc) => {
       if (userDoc) {

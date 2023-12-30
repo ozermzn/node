@@ -2,7 +2,7 @@
 <main class="register-main">
   <div class="register-container">
     <h2>Register</h2>
-    <form class="register-form" action="/signup" method="post">
+    <form class="register-form" action="/signup" method="post" novalidate>
       <div>
         <label for="email">Email</label>
         <input type="email" name="email" id="email" />
@@ -22,7 +22,7 @@
       <div>
         <% if (errorMessage) { %>
         <div>
-          <p class="error-message"><%= errorMessage %></p>
+          <p class="error-message"><%= errorMessage%></p>
         </div>
         <%} %>
         <button class="primary" type="submit">Register</button>

@@ -5,26 +5,52 @@
     <form class="register-form" action="/signup" method="post" novalidate>
       <div>
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" />
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="<%= errorMessage.find(e=>e.path === 'email') ? 'invalid' : 'valid'%>"
+          value="<%= oldInput.email %>"
+        />
       </div>
       <div>
         <label for="name">Name</label>
-        <input type="text" name="name" id="name" />
+        <input
+          type="text"
+          name="name"
+          id="name"
+          value="<%= oldInput.name %>"
+          class="<%= errorMessage.find(e=>e.path === 'name') ? 'invalid' : 'valid'%>"
+        />
       </div>
       <div>
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          class="<%= errorMessage.find(e=>e.path === 'password') ? 'invalid' : 'valid'%>"
+          value="<%= oldInput.password %>"
+        />
       </div>
       <div>
         <label for="confirmPassword">Confirm Password</label>
-        <input type="password" name="confirmPassword" id="confirmPassword" />
+        <input
+          type="password"
+          name="confirmPassword"
+          class="<%= errorMessage.find(e=>e.path === 'confirmPassword') ? 'invalid' : 'valid'%>"
+          id="confirmPassword"
+          value="<%= oldInput.confirmPassword %>"
+        />
       </div>
       <div>
-        <% if (errorMessage) { %>
-        <div>
-          <p class="error-message"><%= errorMessage%></p>
+        <% if (errorMessage) { %> <%for(let error of errorMessage){ %>
+        <div class="error-message-div">
+          <p class="error-message"><%= error.msg%></p>
         </div>
-        <%} %>
+        <% } %> <%} %>
+      </div>
+      <div>
         <button class="primary" type="submit">Register</button>
         <a id="auth-a" href="/login" class="">Do you have a account?</a>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />

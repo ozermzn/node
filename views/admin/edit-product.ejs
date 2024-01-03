@@ -17,7 +17,8 @@
         <input
           type="text"
           name="title"
-          value="<% if (editing) { %><%= product.title %><% } %>"
+          class="<%= errorMessage.find(e=>e.path === 'title') ? 'invalid' : 'valid'%>"
+          value="<% if(editing){ %><%= product.title %><% }else{%><%=oldInput.title%><%}%>"
         />
       </div>
       <div class="form-div">
@@ -25,25 +26,36 @@
         <input
           type="text"
           name="imageUrl"
-          value="<% if (editing) { %><%= product.imageUrl %><% } %>"
+          class="<%= errorMessage.find(e=>e.path === 'imageUrl') ? 'invalid' : 'valid'%>"
+          value="<% if (editing) { %><%= product.imageUrl %><% }else{%><%=oldInput.imageUrl%><%}%>"
         />
       </div>
       <div class="form-div">
         <label for="description">Description</label>
-        <textarea name="description" cols="30" rows="3">
-<% if (editing) { %><%= product.description %><% } %></textarea
+        <textarea
+          name="description"
+          cols="30"
+          rows="3"
+          class="<%= errorMessage.find(e=>e.path === 'description') ? 'invalid' : 'valid'%>"
+        >
+<% if (editing) { %><%= product.description %><% }else{%><%=oldInput.description%><%}%></textarea
         >
       </div>
       <div class="form-div">
         <label for="price">Price</label>
         <input
           type="number"
+          class="<%= errorMessage.find(e=>e.path === 'price') ? 'invalid' : 'valid'%>"
           name="price"
           step="0.01"
-          value="<% if (editing) { %><%= product.price %><% } %>"
+          value="<% if (editing) { %><%= product.price %><%}else{%><%=oldInput.price%><%}%>"
         />
       </div>
-      <% if (editing) { %>
+      <% if (errorMessage) { %> <%for(let error of errorMessage){ %>
+      <div class="error-message-div">
+        <p class="error-message"><%= error.msg%></p>
+      </div>
+      <% } %> <%} %> <% if (editing) { %>
       <input type="hidden" name="productID" value="<%= product._id %>" />
       <%} %>
       <button type="submit" class="primary">

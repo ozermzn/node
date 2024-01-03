@@ -15,16 +15,25 @@ const transporter = nodemailer.createTransport(
 
 exports.getLogin = (req, res, next) => {
   // const isLoggedIn = req.get("Cookie").split(";")[2].trim().split("=")[1];
-  let message = req.flash("error");
   res.render("auth/login", {
     path: "/login",
     pageTitle: "Login",
-    errorMessage: message.length > 0 ? (message = message[0]) : null,
+    errorMessage: [],
   });
 };
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).render("auth/login", {
+      path: "/login",
+      pageTitle: "Login",
+      errorMessage: errors.array(),
+      oldInput: { email, password },
+    });
+  }
+
   User.findOne({ email }).then((user) => {
     if (!user) {
       req.flash("error", "Invalid email.");
@@ -58,7 +67,8 @@ exports.getRegister = (req, res, next) => {
   res.render("auth/register", {
     path: "/register",
     pageTitle: "Register",
-    errorMessage: message.length > 0 ? message : null,
+    errorMessage: [],
+    oldInput: { email: "", name: "", password: "", confirmPassword: "" },
   });
 };
 
@@ -68,22 +78,19 @@ exports.postRegister = (req, res, next) => {
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
   const errors = validationResult(req);
+  const a = errors.array().find((e) => e);
 
   if (!errors.isEmpty()) {
     console.log(errors.array());
     return res.status(422).render("auth/register", {
-      path: "/regiser",
+      path: "/register",
       pageTitle: "Register",
-      errorMessage: errors.array().map((i) => i.msg),
+      errorMessage: errors.array(),
+      oldInput: { email, name, password, confirmPassword },
     });
   }
   User.findOne({ email: email })
     .then((userDoc) => {
-      if (userDoc) {
-        req.flash("error", "Email exist already!");
-        return res.redirect("/register");
-      }
-
       return bcrypt
         .hash(password, 12)
         .then((hashedPassword) => {

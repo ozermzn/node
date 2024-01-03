@@ -17,8 +17,11 @@ router.post(
   isAuth,
   adminController.postAddProduct
 );
-router.get(
-  "/product-list",
+router.get("/product-list", isAuth, adminController.getAdminProducts);
+router.get("/edit-product/:productId", isAuth, adminController.getEditProduct);
+router.post(
+  "/edit-product",
+  isAuth,
   [
     check("title").isLength({ min: 3 }).withMessage("Too short!").trim(),
     check("imageUrl").isURL().withMessage("Invalid url!").trim(),
@@ -27,11 +30,8 @@ router.get(
       .withMessage("Please, write description between 6-200 words.")
       .trim(),
   ],
-  isAuth,
-  adminController.getAdminProducts
+  adminController.postEditProduct
 );
-router.get("/edit-product/:productId", isAuth, adminController.getEditProduct);
-router.post("/edit-product", isAuth, adminController.postEditProduct);
 router.post("/delete-product", isAuth, adminController.postDeleteProduct);
 
 module.exports = router;

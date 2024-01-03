@@ -64,10 +64,10 @@ exports.getEditProduct = (req, res, next) => {
       product,
       errorMessage: [],
       oldInput: {
-        title: "",
-        imageUrl: "",
-        description: "",
-        price: null,
+        newTitle: "",
+        newImageUrl: "",
+        newDescription: "",
+        newPrice: null,
       },
     });
   });
@@ -88,7 +88,12 @@ exports.postEditProduct = (req, res, next) => {
       pageTitle: "Edit Product",
       errorMessage: errors.array(),
       editing: true,
-      oldInput: { newTitle, newImageUrl, newDescription, newPrice },
+      product: {
+        title: newTitle,
+        imageUrl: newImageUrl,
+        description: newDescription,
+        price: newPrice,
+      },
     });
   }
   Product.findById(productID)

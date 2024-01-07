@@ -1,0 +1,31 @@
+.error-main {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-content: center;
+  background-color: black;
+  color: white;
+}
+.error-header {
+  width: 100%;
+  height: 100%;
+  font-size: 55px !important;
+}
+
+.error-p {
+  width: 100%;
+  height: 100%;
+}
+.error-message {
+  color: #eee;
+  background-color: rgba(239, 64, 64, 0.7);
+  padding: 6px;
+  border-radius: 6px;
+}
+.error-message-div {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 12px;
+  margin: 5px 0 5px 0;
+}

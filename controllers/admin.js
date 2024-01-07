@@ -1,7 +1,7 @@
 const Product = require("../models/product");
 const mongodb = require("mongodb");
 const { validationResult } = require("express-validator");
-
+const mongoose = require("mongoose");
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
     pageTitle: "Add Product",
@@ -35,14 +35,24 @@ exports.postAddProduct = (req, res, next) => {
       oldInput: { title, imageUrl, description, price },
     });
   }
-  const product = new Product({ title, price, description, imageUrl, userID });
+  const product = new Product({
+    title,
+    price,
+    description,
+    imageUrl,
+    userID,
+  });
   product
     .save()
     .then((result) => {
       console.log("Created Product");
       res.redirect("/admin/product-list");
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -111,7 +121,11 @@ exports.postEditProduct = (req, res, next) => {
       console.log("Updated Product");
       res.redirect("/admin/product-list");
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postDeleteProduct = (req, res, next) => {
@@ -122,7 +136,11 @@ exports.postDeleteProduct = (req, res, next) => {
       console.log("Item was deleted!");
       console.log(result);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
   res.redirect("/admin/product-list");
 };
 

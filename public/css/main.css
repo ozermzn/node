@@ -108,19 +108,6 @@ a {
   color: #ffb000;
 }
 
-.error-message {
-  color: #eee;
-  background-color: rgba(239, 64, 64, 0.7);
-  padding: 6px;
-  border-radius: 6px;
-}
-.error-message-div {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 12px;
-  margin: 5px 0 5px 0;
-}
 .invalid {
   border: 2px solid rgba(239, 64, 64, 0.7) !important;
 }

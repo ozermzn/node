@@ -37,6 +37,11 @@ app.use(csrfProtection);
 app.use(flash());
 
 app.use((req, res, next) => {
+  res.locals.isLoggedIn = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
   }
@@ -48,13 +53,9 @@ app.use((req, res, next) => {
       req.user = user;
       next();
     })
-    .catch((err) => console.log(err));
-});
-
-app.use((req, res, next) => {
-  res.locals.isLoggedIn = req.session.isLoggedIn;
-  res.locals.csrfToken = req.csrfToken();
-  next();
+    .catch((err) => {
+      next(new Error(err));
+    });
 });
 
 app.use("/admin", adminRoutes);
@@ -63,7 +64,10 @@ app.use(authRoutes);
 app.get("/500", errorControllers.getError500);
 app.use(errorControllers.getError404);
 app.use((error, req, res, next) => {
-  res.redirect("/500");
+  res.status(500).render("500", {
+    pageTitle: "500",
+    isLoggedIn: req.session.isLoggedIn,
+  });
 });
 mongoose
   .connect(MONGODB_URI)

@@ -19,11 +19,13 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
+  const image = req.file;
   const description = req.body.description;
   const price = req.body.price;
   const userID = req.user._id;
   const errors = validationResult(req);
+  res.redirect("/admin/add-product");
+  return console.log(image);
   const a = errors.array().find((e) => e);
   if (!errors.isEmpty()) {
     console.log(errors.array());
@@ -32,14 +34,14 @@ exports.postAddProduct = (req, res, next) => {
       pageTitle: "Add Product",
       errorMessage: errors.array(),
       editing: false,
-      oldInput: { title, imageUrl, description, price },
+      oldInput: { title, image, description, price },
     });
   }
   const product = new Product({
     title,
     price,
     description,
-    imageUrl,
+    image,
     userID,
   });
   product

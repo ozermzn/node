@@ -23,7 +23,6 @@ router.post(
   isAuth,
   [
     check("title").isLength({ min: 3 }).withMessage("Too short!").trim(),
-    check("imageUrl").isURL().withMessage("Invalid url!").trim(),
     check("description")
       .isLength({ min: 6, max: 205 })
       .withMessage("Please, write description between 6-200 words.")

@@ -2,9 +2,11 @@ const Products = require("../models/product");
 const User = require("../models/user");
 const Order = require("../models/order");
 const user = require("../models/user");
+const { getAdminProducts } = require("./admin");
 
 exports.getProducts = (req, res, next) => {
   Products.find().then((products) => {
+    console.log(products);
     res.render("shop/products", {
       products: products,
       path: "/shop",
@@ -23,6 +25,7 @@ exports.getProduct = (req, res, next) => {
 };
 exports.getIndex = (req, res, next) => {
   Products.find().then((products) => {
+    console.log(products);
     res.render("shop/index", {
       products: products,
       path: "/",

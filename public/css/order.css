@@ -17,7 +17,8 @@
 .product-order-information .order-image {
   width: 100px;
   height: 100px;
-  object-fit: center;
+  object-fit: cover;
+
   border-radius: 12px;
   aspect-ratio: 3/2;
 }

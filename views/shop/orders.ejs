@@ -24,7 +24,12 @@
         </h3>
         <h5 class="order-id"><%= product._id %></h5>
         <p><%= product.product.description %></p>
-        <p><%= product.product.price * product.quantity%> ₺</p>
+        <p><%= product.product.price * product.quantity%>₺</p>
+        <p class="order-invoice-p">
+          <a class="order-invoice" href="/orders/<%= product._id %>" download
+            ><i class="fa-solid fa-file-pdf"></i
+          ></a>
+        </p>
       </div>
     </div>
   </div>

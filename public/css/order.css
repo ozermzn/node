@@ -27,3 +27,11 @@
 }
 .order-id {
 }
+.order-invoice-p {
+  padding: 5px 0 5px 0;
+}
+
+.order-invoice {
+  color: white;
+  font-size: 1rem !important;
+}

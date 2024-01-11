@@ -1,9 +1,7 @@
+const fs = require("fs");
+const path = require("path");
 const Products = require("../models/product");
-const User = require("../models/user");
 const Order = require("../models/order");
-const user = require("../models/user");
-const { getAdminProducts } = require("./admin");
-
 exports.getProducts = (req, res, next) => {
   Products.find().then((products) => {
     console.log(products);
@@ -114,5 +112,19 @@ exports.getOrder = (req, res, next) => {
       pageTitle: "Orders",
       order: orders.reverse(),
     });
+  });
+};
+
+exports.getInvoice = (req, res, next) => {
+  const orderID = req.params.orderId;
+  const invoice = "invoice-" + orderID + ".pdf";
+  const invoicePath = path.join("data", "invoices", invoice);
+  fs.readFile(invoicePath, (err, data) => {
+    if (err) {
+      return next(err);
+    }
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", 'inline; filename="' + invoice + '"');
+    res.send(data);
   });
 };

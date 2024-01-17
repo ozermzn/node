@@ -5,6 +5,11 @@
   <div class="user-order-information">
     <h3><%= ordr.user.map(usr => usr.username) %></h3>
     <h5><%= ordr.user.map(usr => usr.userID) %></h5>
+    <p class="order-invoice-p">
+      <a class="order-invoice" target="_blank" href="/orders/<%= ordr._id %>"
+        >Invoice <i class="fa-solid fa-file-pdf"></i
+      ></a>
+    </p>
   </div>
   <% ordr.products.forEach(product =>{ %>
 
@@ -25,14 +30,6 @@
         <h5 class="order-id"><%= product._id %></h5>
         <p><%= product.product.description %></p>
         <p><%= product.product.price * product.quantity%>₺</p>
-        <p class="order-invoice-p">
-          <a
-            class="order-invoice"
-            target="_blank"
-            href="/orders/<%= ordr._id %>"
-            ><i class="fa-solid fa-file-pdf"></i
-          ></a>
-        </p>
       </div>
     </div>
   </div>

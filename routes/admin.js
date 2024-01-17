@@ -9,8 +9,8 @@ router.post(
   [
     check("title").isLength({ min: 3 }).withMessage("Too short!").trim(),
     check("description")
-      .isLength({ min: 6, max: 25 })
-      .withMessage("Please, write description between 6-25 words.")
+      .isLength({ min: 6, max: 255 })
+      .withMessage("Please, write description between 6-255 characters.")
       .trim(),
   ],
   isAuth,

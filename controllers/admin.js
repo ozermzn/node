@@ -1,7 +1,6 @@
 const Product = require("../models/product");
-const mongodb = require("mongodb");
+const fileHelper = require("../util/file");
 const { validationResult } = require("express-validator");
-const mongoose = require("mongoose");
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
     pageTitle: "Add Product",
@@ -138,24 +137,35 @@ exports.postEditProduct = (req, res, next) => {
     .catch((err) => {
       const error = new Error(err);
       error.httpStatusCode = 500;
+      console.log(err);
       return next(error);
     });
 };
 
 exports.postDeleteProduct = (req, res, next) => {
   const productID = req.body.productId;
+  Product.findById(productID)
+    .then((product) => {
+      if (!product) {
+        return next(new Error("Product not found!"));
+      }
 
-  Product.deleteOne({ _id: productID, userID: req.session.user._id })
+      return Product.deleteOne({
+        _id: productID,
+        userID: req.session.user._id,
+      });
+    })
     .then((result) => {
       console.log("Item was deleted!");
       console.log(result);
+      res.redirect("/admin/product-list");
     })
     .catch((err) => {
       const error = new Error(err);
       error.httpStatusCode = 500;
+      console.log(err);
       return next(error);
     });
-  res.redirect("/admin/product-list");
 };
 
 exports.getAdminProducts = (req, res, next) => {

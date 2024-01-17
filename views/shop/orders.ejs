@@ -26,7 +26,10 @@
         <p><%= product.product.description %></p>
         <p><%= product.product.price * product.quantity%>₺</p>
         <p class="order-invoice-p">
-          <a class="order-invoice" href="/orders/<%= product._id %>" download
+          <a
+            class="order-invoice"
+            target="_blank"
+            href="/orders/<%= ordr._id %>"
             ><i class="fa-solid fa-file-pdf"></i
           ></a>
         </p>
